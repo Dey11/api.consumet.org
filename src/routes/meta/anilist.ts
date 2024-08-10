@@ -133,7 +133,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
       const weekEnd = (request.query as { weekEnd: number | string }).weekEnd;
       const notYetAired = (request.query as { notYetAired: boolean }).notYetAired;
 
-       const anilist = generateAnilistMeta();
+      const anilist = generateAnilistMeta();
       const _weekStart = Math.ceil(Date.now() / 1000);
 
       const res = await anilist.fetchAiringSchedule(
@@ -293,6 +293,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
               await anilist.fetchAnimeInfo(id, isDub as boolean, fetchFiller as boolean),
             );
     } catch (err: any) {
+      console.log(err);
       reply.status(500).send({ message: err.message });
     }
   });
@@ -337,6 +338,7 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
           url: process.env.PROXY as string | string[],
         });
       } catch (err) {
+        console.log(err);
         reply
           .status(500)
           .send({ message: 'Something went wrong. Contact developer for help.' });
